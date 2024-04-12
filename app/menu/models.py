@@ -5,10 +5,11 @@ class FolderManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset()
 
-    def get_all_subfolders(self, folder):
+    @staticmethod
+    def get_all_subfolders(folder):
         subfolders = folder.children.all()
         for subfolder in subfolders:
-            subfolders = subfolders.union(self.get_all_subfolders(subfolder))
+            subfolders = subfolders.union(FolderManager.get_all_subfolders(subfolder))
         return subfolders
 
 

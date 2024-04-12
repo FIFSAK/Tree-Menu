@@ -4,9 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu of Folders</title>
+    <style>
+    .sub-menu {
+        display: none;
+        margin-top: 5px;
+        margin-left: 20px; /* Для небольшого отступа подменю */
+
+    }
+    .menu-toggle {
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
-<h1>{{ folder.name }}</h1>
-{% include 'children.html' %}
+<h1>Menu of Folders</h1>
+{% for item in folders %}
+    <div class="expandable"> <!-- Добавлен класс expandable -->
+        <div class="menu-toggle"><strong>{{ item.folder.name }}</strong></div>
+        <div class="sub-menu"> <!-- Добавлен див с классом sub-menu для скрытия содержимого -->
+            {% if item.subfolders %}
+                {% include 'children.html' with folder=item.folder %}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Находим все элементы, которые должны переключать подменю
+        const toggles = document.querySelectorAll('.menu-toggle');
+
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', function () {
+                // Находим ближайший родительский элемент с классом expandable и внутри него ищем .sub-menu
+                const subMenu = this.closest('.expandable').querySelector('.sub-menu');
+                if (subMenu.style.display === "none" || !subMenu.style.display) {
+                    subMenu.style.display = "block";
+                } else {
+                    subMenu.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

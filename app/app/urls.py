@@ -22,5 +22,4 @@ from menu.views import get_menu
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('menu/', get_menu),
-    path('menu/<int:pk>/', get_menu),
 ]
