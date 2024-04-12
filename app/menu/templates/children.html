@@ -1,0 +1,10 @@
+<ul>
+    {% for i in folder.children.all %}
+        <li>
+            {{ i.name }}
+            {% if i.children.all %}
+                {% include 'children.html' with folder=i %}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
