@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Детали меню{% endblock %}
+{% block menu %}
+<!-- Пустой блок, чтобы убрать меню -->
+{% endblock %}
+{% block content %}
+    <h1>Детали меню</h1>
+    <ul>
+        {% include "menu_template.html" with menu_items=menu_items %}
+    </ul>
+{% endblock %}

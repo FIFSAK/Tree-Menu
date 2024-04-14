@@ -1,16 +1,18 @@
+<!-- home.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Главная страница меню</title>
 </head>
 <body>
-{% for menu in  menus %}
-    <ul>
-        <li>
-            <a href="{{ menu.url }}" class="close">{{ menu.name }}</a>
-        </li>
-    </ul>
-{% endfor %}
+    <h1>Выберите меню</h1>
+    {% for menu in menus %}
+        <ul>
+            <li>
+                <a href="{% url 'menu_detail' menu.url_name %}">{{ menu.name }}</a>
+            </li>
+        </ul>
+    {% endfor %}
 </body>
 </html>
