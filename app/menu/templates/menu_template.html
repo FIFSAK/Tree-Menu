@@ -1,0 +1,11 @@
+{% for item in menu_items %}
+    <li class="menu-item{% if item.is_active %} active{% endif %}{% if item.children.all %} has-children{% endif %}"
+        data-has-children="{% if item.children.all %}true{% else %}false{% endif %}">
+        <a href="{{ item.url }}">{{ item.name }}</a>
+        {% if item.children.all %}
+            <ul class="sub-menu">
+                {% include "menu_template.html" with menu_items=item.children.all %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}

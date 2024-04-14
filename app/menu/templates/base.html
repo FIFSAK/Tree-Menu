@@ -1,0 +1,43 @@
+{% load menu_tags %}
+<!-- base.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <style>
+        .menu-item .sub-menu { display: none; }
+        .menu-item.expand > .sub-menu { display: block; }
+        .menu-item.expand .sub-menu { display: block; }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        {% block menu %}
+        {% draw_menu 'main_menu' %}
+        {% endblock %}
+    </div>
+    {% block content %}
+    <!-- Default content goes here -->
+    {% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var menuItems = document.querySelectorAll('.menu-item[data-has-children="true"]');
+            menuItems.forEach(function(menuItem) {
+                var anchor = menuItem.querySelector('a');
+                anchor.addEventListener('click', function(e) {
+                    var parentMenuItem = e.target.closest('.menu-item');
+                    if (parentMenuItem.getAttribute('data-has-children') === 'true') {
+                        e.preventDefault();
+                        var subMenu = parentMenuItem.querySelector('.sub-menu');
+                        if (subMenu.style.display === 'none' || subMenu.style.display === '') {
+                            subMenu.style.display = 'block';
+                        } else {
+                            subMenu.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

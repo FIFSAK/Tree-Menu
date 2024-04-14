@@ -1,8 +1,8 @@
 from django.contrib import admin
+from .models import MenuItem
 
-from .models import Folder
 
-
-@admin.register(Folder)
-class FolderAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent')
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ['name', 'parent', 'url_name', 'url']
+    list_filter = ['parent']
