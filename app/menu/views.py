@@ -1,21 +1,30 @@
 from django.shortcuts import render
-from .models import Folder
-from django.http import HttpResponse
-from django.core import serializers
+from .models import MenuItem
 
 
-def get_menu(request, pk=None):
-    if request.method == 'GET':
-        if pk is None:
-            # Получаем все корневые папки, если pk не указан
-            folders = Folder.objects.filter(parent=None)
-        else:
-            # Или одну конкретную папку по pk
-            folders = [Folder.objects.get(id=pk)]
+def main_view(request):
+    menus = MenuItem.objects.filter(parent__isnull=True)
+    current_path = request.path
+    context = {'current_path': current_path, 'page_title': 'О нас'}
+    return render(request, 'base.html', context)
 
-        # Подготавливаем контекст для шаблона
-        context = {'folders': []}
-        for folder in folders:
-            subfolders = Folder.objects.get_all_subfolders(folder)
-            context['folders'].append({'folder': folder, 'subfolders': subfolders})
-        return render(request, 'menu.html', context)
+
+def about_view(request):
+    current_path = request.path
+    context = {'current_path': current_path, 'page_title': 'О нас'}
+    return render(request, 'base.html', context)
+
+# Повторите это для каждого view, где передаётся context
+
+
+
+def contacts_view(request):
+    current_path = request.path
+    context = {'current_path': current_path, 'page_title': 'Контакты'}
+    return render(request, 'base.html', context)
+
+
+def menu_view(request):
+    current_path = request.path
+    context = {'current_path': current_path, 'page_title': 'Меню'}
+    return render(request, 'base.html', context)

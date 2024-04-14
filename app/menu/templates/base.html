@@ -1,0 +1,43 @@
+{% load menu_tags %}
+<style>
+    .menu-item .sub-menu {
+        display: none;
+    }
+
+    .menu-item.expand > .sub-menu {
+        display: block;
+    }
+
+    .menu-item.expand .sub-menu {
+        display: block;
+    }
+
+</style>
+<div class="menu">
+    {% draw_menu 'main_menu' %}
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var menuItems = document.querySelectorAll('.menu-item[data-has-children="true"]');
+
+    menuItems.forEach(function(menuItem) {
+        var anchor = menuItem.querySelector('a');
+
+        anchor.addEventListener('click', function(e) {
+            // Найдём ближайший элемент с классом 'menu-item'
+            var parentMenuItem = e.target.closest('.menu-item');
+
+            if (parentMenuItem.getAttribute('data-has-children') === 'true') {
+                e.preventDefault();
+
+                var subMenu = parentMenuItem.querySelector('.sub-menu');
+                if (subMenu.style.display === 'none' || subMenu.style.display === '') {
+                    subMenu.style.display = 'block';
+                } else {
+                    subMenu.style.display = 'none';
+                }
+            }
+        });
+    });
+});
+</script>
